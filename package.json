@@ -8,6 +8,7 @@
   },
   "repository": "/vuepress-theme-openapi",
   "license": "ISC",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "dependencies": {
     "js-yaml-loader": "^1.2.2",
     "swagger-ui": "^3.33.0"
