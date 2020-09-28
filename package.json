@@ -1,6 +1,6 @@
 {
   "name": "vuepress-theme-openapi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -8,7 +8,9 @@
   },
   "repository": "/vuepress-theme-openapi",
   "license": "ISC",
-  "publishConfig": { "registry": "https://registry.npmjs.org/" },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "js-yaml-loader": "^1.2.2",
     "swagger-ui": "^3.33.0"
