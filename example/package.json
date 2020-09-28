@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "vuepress": "^1.5.3"
+  },
+  "devDependencies": {
+    "vuepress-theme-openapi": "^0.1.0"
   }
 }
