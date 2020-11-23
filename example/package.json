@@ -13,6 +13,6 @@
     "vuepress": "^1.5.3"
   },
   "devDependencies": {
-    "vuepress-theme-openapi": "^0.1.0"
+    "vuepress-theme-openapi": "^1.0.0"
   }
 }
