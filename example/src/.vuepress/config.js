@@ -24,13 +24,13 @@ module.exports = {
   dest:'./../docs',
   base:'/vuepress-theme-openapi/',
   theme: 'openapi',
-  servers: ['http://172.19.18.132:8082'],
   /**
    * Theme configuration, here is the default theme configuration for VuePress.
    *
    * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
    */
   themeConfig: {
+    servers: ['http://172.19.18.132:8082'],
     editLinks: false,
     lastUpdated: false,
     nav: [

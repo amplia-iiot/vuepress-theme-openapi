@@ -30,7 +30,9 @@ To do so is quite simple, you just need to add an array called **servers** at **
 ```js
 // .vuepress/config.js
 module.exports = {
-  servers: ['http://172.19.18.132:8082']
+  themeConfig: {
+    servers: ['http://172.19.18.132:8082']
+  }
 }
 ```
 

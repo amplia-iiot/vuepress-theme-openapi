@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     loadSwagger(){
-      const { servers = [] } = this.$site;
+      const { servers = [] } = this.$themeConfig;
       const composedNameSpec = this.page.regularPath.split('/').filter((item) => !!item).join('-').replace(/\..*$/, '')
       import(`@specs/${composedNameSpec}.${this.extension}`).then(spec => {
         SwaggerUI({
