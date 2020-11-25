@@ -31,6 +31,7 @@ module.exports = {
    */
   themeConfig: {
     servers: ['http://172.19.18.132:8082'],
+    commonSchemas:['schemas.json','schemas.yaml'],
     editLinks: false,
     lastUpdated: false,
     nav: [
