@@ -24,26 +24,50 @@ export default {
     isYaml () {
       return this.$frontmatter.openapi === 'yaml'
     },
-    extension(){
-      return this.isYaml?'yaml':'json'
+    extension () {
+      return this.isYaml ? 'yaml' : 'json'
     }
   },
-  mounted(){
+  mounted () {
     this.loadSwagger()
   },
   methods: {
-    loadSwagger(){
-      const { servers = [] } = this.$themeConfig;
-      const composedNameSpec = this.page.regularPath.split('/').filter((item) => !!item).join('-').replace(/\..*$/, '')
-      import(`@specs/${composedNameSpec}.${this.extension}`).then(spec => {
+    async loadSwagger(){
+      const { servers = [], commonSchemas = [] } = this.$themeConfig;
+      const composedNameSpec = this.converPagePathToSpecFilename()
+      try{
+        const spec = await import(`@specs/${composedNameSpec}.${this.extension}`)
+        const commonSchemasContent = await this.findCommonSchemas(commonSchemas)
+        this.mixCommonSchemas(spec,commonSchemasContent)
         SwaggerUI({
           spec: { ...spec, servers: servers.map(url => ({ url })) },
-          domNode: this.$el
+          domNode: this.$el,
         })
-      }).catch((err) => {
+      }catch(err){
         this.$el.innerHTML = ''
-        console.warn('Spec file not found:',`@specs/${composedNameSpec}.${this.extension}`);
-      })
+        console.warn('Spec file not  found:',`@specs/${composedNameSpec}.${this.extension}`);
+      }
+    },
+    converPagePathToSpecFilename(){
+      return this.page.regularPath.split('/').filter((item) => !!item).join('-').replace(/\..*$/, '')
+    },
+    async findCommonSchemas(commonSchemas){
+        const commonSchemasContent = await Promise.all(commonSchemas.map(file=>import(`@specs/${file}`)))
+        const schemasMixedTogether = commonSchemasContent.reduce((obj, next)=>{return {...obj, ...(next.default||{})}},{})
+        return schemasMixedTogether;
+    },
+    mixCommonSchemas(spec,commonSchemas){
+      if (spec.components){
+        if (spec.components.schemas){
+          spec.components.schemas = {...spec.components.schemas,...commonSchemas}
+        }else{
+          spec.components.schemas = commonSchemas
+        }
+      }else{
+        spec.components = {
+          schemas:commonSchemas
+        }
+      }
     }
   }
 }

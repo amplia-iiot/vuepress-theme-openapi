@@ -36,6 +36,28 @@ module.exports = {
 }
 ```
 
+### In case of you are keen on using schemas defined in other files
+
+So far now, there is an open issue on swagger which makes impossible use schemas references of other files (https://github.com/swagger-api/swagger-editor/issues/1409), in order to bring this feature, you may add a property called commonSchemas at themeConfig. 
+
+On this property you should add your files names, which should be located at spec folder, where you have defined your commons schemas. This component will put all these schemas on each openapi definition. So, you could use in your openapi definition as if it was already there.
+
+```js
+// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    commonSchemas: ['schemas.json','schemas.yaml']
+  }
+}
+```
+
+You may find an example of this feature at: example/src/specs/petstore.json
+This definition is using the schemas defined at:
+* example/src/specs/schemas.json
+* example/src/specs/schemas.yaml
+  
+Same example on live [here](https://amplia-iiot.github.io/vuepress-theme-openapi/petstore/#even-the-subheaders)
+
 ### Where should the specifications ( json or yaml ) be ?
 
 All the specifications should be located on *./src/specs*. In our example, on *example/src/specs*
