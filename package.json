@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "js-yaml-loader": "^1.2.2",
+    "file-saver": "^2.0.5",
     "swagger-ui": "^3.33.0"
   }
 }
