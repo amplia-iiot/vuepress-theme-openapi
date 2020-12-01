@@ -8335,12 +8335,13 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-openapi@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/vuepress-theme-openapi/-/vuepress-theme-openapi-1.2.0.tgz#99d735e2e89f4101f27d7f0e5eabff6f24ef6935"
-  integrity sha512-oBWka7d5Y2zCbpo3zIThmEdhFnv4Q+kuAIv4FItdYh/hm460Hlktsyv481zeL6tKkG3SEZbkYKKUuHG0CVrXMQ==
+vuepress-theme-openapi@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-openapi/-/vuepress-theme-openapi-1.3.0.tgz#b357b5f921149230b6a40429976a0c41b3a33449"
+  integrity sha512-8gTtw+9p/R/KibSjekZa4O8db0kxAn7CgbE4SPNAnVaroAw224HDGFou9e4Utyxb1mAbcCNyan6XbD7uBUrBgA==
   dependencies:
     file-saver "^2.0.5"
+    glob "^7.1.6"
     js-yaml-loader "^1.2.2"
     swagger-ui "^3.33.0"
 
