@@ -1,7 +1,12 @@
 // .vuepress/theme/index.js
 const path = require('path')
-
-module.exports = (themeConfig, { siteConfig } ) => {
+const glob = require("glob")
+const files = glob
+   .sync('./src/specs/*.json')//get all the *json schemas 
+   .map(file => file.split('/').pop()) // remove the path and extract just the file name
+   
+module.exports = (themeConfig, { siteConfig }) => {
+   themeConfig.commonSchemas = files
    console.log(siteConfig.configureWebpack);
    const configureWebpack = siteConfig.configureWebpack
    siteConfig.configureWebpack = (config) => {

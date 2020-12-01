@@ -38,29 +38,17 @@ module.exports = {
 
 ### In case of you are keen on using schemas defined in other files
 
-So far now, there is an open issue on swagger which makes impossible use schemas references of other files (https://github.com/swagger-api/swagger-editor/issues/1409), in order to bring this feature, you may add a property called commonSchemas at themeConfig. 
+So far now, there is an open issue on swagger which makes impossible use schemas references of other files (https://github.com/swagger-api/swagger-editor/issues/1409), in order to bring this feature, you may add as many json files as you need at *./src/specs*. All these schemas defined in these json files will be loaded by the theme and added in every single specification written in yaml. Therefore, you could use in your openapi definition as if it was already there.
 
-On this property you should add your files names, which should be located at spec folder, where you have defined your commons schemas. This component will put all these schemas on each openapi definition. So, you could use in your openapi definition as if it was already there.
-
-```js
-// .vuepress/config.js
-module.exports = {
-  themeConfig: {
-    commonSchemas: ['schemas.json','schemas.yaml']
-  }
-}
-```
-
-You may find an example of this feature at: example/src/specs/petstore.json
+You may find an example of this feature at: example/src/specs/petstore.yaml
 This definition is using the schemas defined at:
 * example/src/specs/schemas.json
-* example/src/specs/schemas.yaml
   
 Same example on live [here](https://amplia-iiot.github.io/vuepress-theme-openapi/petstore/#even-the-subheaders)
 
-### Where should the specifications ( json or yaml ) be ?
+### Where should the specifications yaml be ?
 
-All the specifications should be located on *./src/specs*. In our example, on *example/src/specs*
+All the specifications should be located on *./src/specs* and written in yaml. In our example, on *example/src/specs*
 
 ### How do these files have to be called ? 
 
@@ -68,22 +56,11 @@ The name will be given by the path where the vuepress page is located.
 
 The best way to explain it is by examples ( you will find all of them in this project ):
 
-* example/src/petstore/README.md -> example/src/spect/petstore.json || example/src/spect/petstore.yaml 
-* example/src/petstore/using-vue.md -> example/src/spect/petstore-using-vue.json || example/src/spect/petstore-using-vue.yaml 
-* example/src/secondSample/README.md -> example/src/spect/secondSample.json || example/src/spect/secondSample.yaml 
-* example/src/opengate/README.md -> example/src/spect/opengate.json || example/src/spect/opengate.yaml 
+* example/src/petstore/README.md -> example/src/spect/petstore.yaml 
+* example/src/petstore/using-vue.md ->  example/src/spect/petstore-using-vue.yaml 
+* example/src/secondSample/README.md ->  example/src/spect/secondSample.yaml 
+* example/src/opengate/README.md ->  example/src/spect/opengate.yaml 
 
-### Specification written in YAML or JSON
+### Specification written in YAML
 
-You can write your specification in both formats. The only thing that you should do whether the specification is written in YAML is to set the property **openapi** on the frontmatter markdown section.
-
-You will find an example at *example/src/secondSample/README.md*
-
-Markdown example: 
-```markdown
----
-openapi: yaml
----
-
-# Documentation written in yaml
-```
+You can write your specification just in yaml format. This is because we are using all the *.json on ./src/specs as schemas catalogs

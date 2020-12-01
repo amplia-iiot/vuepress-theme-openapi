@@ -31,14 +31,6 @@ export default {
       finalSpecName:null,
     }
   },
-  computed: {
-    isYaml () {
-      return this.$frontmatter.openapi === 'yaml'
-    },
-    extension () {
-      return this.isYaml ? 'yaml' : 'json'
-    }
-  },
   mounted () {
     this.loadSwagger()
   },
@@ -51,7 +43,7 @@ export default {
       const { servers = [], commonSchemas = [] } = this.$themeConfig;
       const composedNameSpec = this.converPagePathToSpecFilename()
       try{
-        const spec = await import(`@specs/${composedNameSpec}.${this.extension}`)
+        const spec = await import(`@specs/${composedNameSpec}.yaml`)
         const commonSchemasContent = await this.findCommonSchemas(commonSchemas)
         this.finalSpec = this.mixCommonSchemas(spec,commonSchemasContent)
         this.finalSpecName = composedNameSpec
@@ -61,16 +53,20 @@ export default {
         })
       }catch(err){
         this.$el.innerHTML = ''
-        console.warn('Spec file not  found:',`@specs/${composedNameSpec}.${this.extension}`);
+        console.warn('Spec file not  found:',`@specs/${composedNameSpec}.yaml`);
       }
     },
     converPagePathToSpecFilename(){
       return this.page.regularPath.split('/').filter((item) => !!item).join('-').replace(/\..*$/, '')
     },
     async findCommonSchemas(commonSchemas){
+      try{
         const commonSchemasContent = await Promise.all(commonSchemas.map(file=>import(`@specs/${file}`)))
         const schemasMixedTogether = commonSchemasContent.reduce((obj, next)=>{return {...obj, ...(next.default||{})}},{})
         return schemasMixedTogether;
+      }catch(err){
+        console.warn(err);
+      }
     },
     mixCommonSchemas(spec,commonSchemas){
       if (spec.components){
