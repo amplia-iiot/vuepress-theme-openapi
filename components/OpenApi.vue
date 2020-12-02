@@ -52,7 +52,7 @@ export default {
           domNode: this.$el.querySelector(`.${this.baseClass}`),
         })
       }catch(err){
-        this.$el.innerHTML = ''
+        this.$el.querySelector(`.${this.baseClass}`).innerHTML = ''
         console.warn('Spec file not  found:',`@specs/${composedNameSpec}.yaml`);
       }
     },
