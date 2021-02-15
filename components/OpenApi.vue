@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="download-spec" @click="download">Download Spec</div>
+    <div v-if="hasSpec" class="download-spec" @click="download">Download Spec</div>
     <div :class="baseClass"></div>
   </div>
 </template>
@@ -15,6 +15,11 @@ export default {
     page: {
       type: Object,
       required: true
+    }
+  },
+  computed:{
+    hasSpec(){
+      return typeof this.finalSpecName === 'string' && this.finalSpecName.length > 0
     }
   },
   watch: {
@@ -53,6 +58,8 @@ export default {
         })
       }catch(err){
         this.$el.querySelector(`.${this.baseClass}`).innerHTML = ''
+        this.finalSpec = null
+        this.finalSpecName = null
         console.warn('Spec file not  found:',`@specs/${composedNameSpec}.yaml`);
       }
     },
