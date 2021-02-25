@@ -11,6 +11,9 @@ import yaml from 'js-yaml'
 import { saveAs } from 'file-saver'
 import SwaggerUI from 'swagger-ui'
 import 'swagger-ui/dist/swagger-ui.css'
+
+const typeReferenceRegExpr = /^\s*\$ref:\s*(".*")$/gm
+
 export default {
   name: "OpenApi",
   props: {
@@ -36,7 +39,8 @@ export default {
       baseClass:'open-api-container',
       finalSpec:null,
       finalSpecName:null,
-      commonSchemasContent:null
+      commonSchemasContent:null,
+      typesReferenced:[]
     }
   },
   async mounted () {
@@ -57,7 +61,7 @@ export default {
       const composedNameSpec = `${this.converPagePathToSpecFilename()}.yaml`
       try{
         const {data} = await axios.get(this.fileUrl(composedNameSpec))
-        const spec = yaml.load(data)
+        const spec = yaml.load(this.replaceYamlReferences(data))
         this.finalSpec = this.mixCommonSchemas(spec,this.commonSchemasContent)
         this.finalSpecName = `${this.converPagePathToSpecFilename()}.json`
         SwaggerUI({
@@ -87,18 +91,42 @@ export default {
       }
     },
     mixCommonSchemas(spec,commonSchemas){
-      if (spec.components){
-        if (spec.components.schemas){
-          spec.components.schemas = {...spec.components.schemas,...commonSchemas}
-        }else{
-          spec.components.schemas = commonSchemas
-        }
-      }else{
-        spec.components = {
-          schemas:commonSchemas
-        }
+      if (!spec.components){
+        spec.components = {}
+      } 
+      if(!spec.components.schemas){
+        spec.components.schemas = {}
       }
+      const typesToLoad = this.typesReferenced.filter((typeName)=>{
+        return !spec.components.schemas[typeName]
+      })
+      typesToLoad
+      .map((typeName)=>({typeName,schema:commonSchemas[typeName]}))
+      .filter(({schema})=>schema !== undefined)
+      .forEach(({typeName,schema})=>{
+        spec.components.schemas[typeName] = schema
+      })
       return spec;
+    },
+    replaceYamlReferences(yaml){
+      let replacedYAML = yaml
+      let match;
+      const yamlReferences = []
+      while(match=typeReferenceRegExpr.exec(replacedYAML)){
+        const [line,typePath] = match 
+        const [type] = typePath.split('/').reverse()
+        const replacedLine = line.replace(typePath,this.createTypeReference(type))
+        replacedYAML = replacedYAML.replace(line,replacedLine)
+        yamlReferences.push(type)
+      }
+      this.typesReferenced = yamlReferences.map(this.removeLastQuotes)
+      return replacedYAML;
+    },
+    createTypeReference(typeName){
+      return `"#/components/schemas/${typeName}`
+    },
+    removeLastQuotes(str){
+      return str.replace('"','')
     }
   }
 }
