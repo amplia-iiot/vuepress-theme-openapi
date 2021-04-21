@@ -8376,10 +8376,10 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-openapi@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/vuepress-theme-openapi/-/vuepress-theme-openapi-1.5.0.tgz#8fba824cb9948cb854088f492dcb11ac535e7d56"
-  integrity sha512-NLWIC+Q+WMq3SUALjGONM+M6Vq3tULN6LviO8tGw1YmjfTF3pl5pWV6XvR7+WrSeEzFdA9b15rWekofdqZJCaQ==
+vuepress-theme-openapi@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-openapi/-/vuepress-theme-openapi-1.6.0.tgz#33745770edbf788acdf9b6b006948b0916d1cf7a"
+  integrity sha512-5suYK8Vnw6DflgLfkGMZqY+gmEuiKfjOCXE2S8l9uRcAsxwiw72yqQ/IJRHavflFWeHCFMyNjKP96PA2SyYGWw==
   dependencies:
     axios "^0.21.1"
     file-saver "^2.0.5"
