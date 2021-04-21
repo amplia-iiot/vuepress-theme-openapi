@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="custom-layout">
     <ParentLayout>
       <template v-slot:page-bottom>
           <component v-if="dynamicComponent" :is="dynamicComponent" :page="$page"></component>
@@ -13,7 +13,7 @@ import ParentLayout from '@parent-theme/layouts/Layout.vue'
 
 export default {
   components: {
-    ParentLayout,
+    ParentLayout
    }, 
   data() {
     return {
@@ -27,3 +27,13 @@ export default {
   }
 }
 </script>
+
+<style>
+  .custom-layout .theme-default-content{
+    padding-top:0px;
+  }
+
+  .custom-layout .theme-default-content:not(.custom) > h1{
+    padding-top:1em;
+  }
+</style>
